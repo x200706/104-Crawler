@@ -1,16 +1,16 @@
-# 改成用python batsearch.py進入 做批量查詢
+# 用python batsearch.py進入則能做批量查詢
 import subprocess
 import time
 
 commands = [
-  "python 104-Crawler --key_word '後端工程師' --min_salary 35000 --max_salary 50000 --area '6001001000'",
-  "python 104-Crawler --key_word '後端工程師' --min_salary 35000 --max_salary 50000 --area '6001002000'",
-  "python 104-Crawler --key_word '軟體工程師' --min_salary 35000 --max_salary 50000 --area '6001001000'",
-  "python 104-Crawler --key_word '軟體工程師' --min_salary 35000 --max_salary 50000 --area '6001002000'",
-  "python 104-Crawler --key_word 'Java' --min_salary 35000 --max_salary 50000 --area '6001001000'",
-  "python 104-Crawler --key_word 'Java' --min_salary 35000 --max_salary 50000 --area '6001002000'",
-  "python 104-Crawler --key_word 'Django' --min_salary 35000 --max_salary 50000 --area '6001001000'",
-  "python 104-Crawler --key_word 'Django' --min_salary 35000 --max_salary 50000 --area '6001002000'",
+  "python 104-Crawler --key_word '後端工程師' --min_salary 35000 --area '6001001000'",
+  "python 104-Crawler --key_word '後端工程師' --min_salary 35000 --area '6001002000'",
+  "python 104-Crawler --key_word '軟體工程師' --min_salary 35000 --area '6001001000'",
+  "python 104-Crawler --key_word '軟體工程師' --min_salary 35000 --area '6001002000'",
+  "python 104-Crawler --key_word 'Java' --min_salary 35000 --area '6001001000'",
+  "python 104-Crawler --key_word 'Java' --min_salary 35000 --area '6001002000'",
+  "python 104-Crawler --key_word 'Django' --min_salary 35000 --area '6001001000'",
+  "python 104-Crawler --key_word 'Django' --min_salary 35000 --area '6001002000'",
 ]
 
 for command in commands:

@@ -3,11 +3,12 @@
 from datetime import datetime
 from collections import namedtuple
 from option import args
-from utils._104_inf import requirement, headers, df_template, SEARCH_URL
+from utils._104_inf import nrequirement, requirement, headers, df_template, SEARCH_URL
 
 import os
 import requests
 import pandas as pd
+import random
 
 current_time = "{:%Y%m%d_%H_%M}".format(datetime.now())
 os.makedirs('{}/{}'.format(args.output_dir, current_time), exist_ok=True)
@@ -23,9 +24,12 @@ def run():
 
   print("Start crawling ...")
   # 異動處：把碩士學歷跟工作經驗的條件去掉
-  init_search = requirement(1, args.key_word, '1', args.area, '', 'M',
-                            args.min_salary, args.max_salary, '1', '',
-                            '2018indexpoc', '1')
+  # init_search = requirement(1, args.key_word, '1', args.area, '', 'M',
+  #                           args.min_salary, args.max_salary, '1', '',
+  #                           '2018indexpoc', '1')
+  # 異動處：擴大搜尋範圍，目前只限制關鍵字、地區跟最低薪資
+  init_search = nrequirement(0, args.key_word, args.area, 'M', args.min_salary,
+                             '1')
   init_params = dict(init_search._asdict())
 
   content = fetch(init_params)
@@ -41,9 +45,12 @@ def run():
 
     for page in range(totalPage):
       # 異動處：把碩士學歷跟工作經驗的條件去掉
-      search_page = requirement(1, args.key_word, '1', args.area, '', 'M',
-                                args.min_salary, args.max_salary, '1', '',
-                                '2018indexpoc', (page + 1))
+      # search_page = requirement(1, args.key_word, '1', args.area, '', 'M',
+      #                           args.min_salary, args.max_salary, '1', '',
+      #                           '2018indexpoc', (page + 1))
+      # 異動處：擴大搜尋範圍
+      search_page = nrequirement(0, args.key_word, args.area, 'M',
+                                 args.min_salary, (page + 1))
       current_params = dict(search_page._asdict())
 
       content = fetch(current_params)
@@ -54,11 +61,12 @@ def run():
         for k in df_template.keys():
           df_template[k] = row[k]
           pass
+        # print([df_template])
         df_job = df_job._append([df_template], ignore_index=False)
         # 更新處：pandas 2.0.3不再支持append方法，這邊直接調用_append，不過可以的話用concat改寫更好
         pass
     df_job.to_csv('{}/{}/df_job.csv'.format(args.output_dir, current_time),
-                  encoding="utf_8_sig")
+                  encoding="utf_8_sig")  # 如果是我的話，我想用隨機亂數當後綴
     pass
 
   print("Mission complete.")
